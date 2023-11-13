@@ -44,7 +44,7 @@ public class ChristmasEvent {
         return 0;
     }
 
-    private int calculateStarDayDiscount(int visitDate) {
+    private int starDayDiscount(int visitDate) {
         if (isStarDay(visitDate)) {
             return STAR_DAY_DISCOUNT;
         }
