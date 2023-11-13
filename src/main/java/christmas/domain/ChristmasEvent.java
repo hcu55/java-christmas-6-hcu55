@@ -10,12 +10,23 @@ public class ChristmasEvent {
     private static final int WEEKDAY_WEEKEND_DISCOUNT = 2023;
     private static final int STAR_DAY_DISCOUNT = 1000;
     private static final int MINIMUM_ORDER_FOR_CHAMPAGNE = 120_000;
+    private static final int MINIMUM_ORDER_FOR_EVENT_DISCOUNT = 10_000;
     private static final List<Integer> STAR_DAYS = List.of(3, 10, 17, 24, 25, 31);
 
     private int calculateTotalOrderPrice(Map<Menu, Integer> order) {
         return order.entrySet().stream()
                 .mapToInt(entry -> entry.getKey().getPriceForCount(entry.getValue()))
                 .sum();
+    }
+
+    private int totalDiscountIfCanEvent(int totalOrderPrice, int visitDate, Map<Menu, Integer> order) {
+        if (totalOrderPrice >= MINIMUM_ORDER_FOR_EVENT_DISCOUNT) {
+            return christmasDdayDiscount(visitDate) +
+                    weekdayDiscount(visitDate, order) +
+                    weekendDiscount(visitDate, order) +
+                    starDayDiscount(visitDate);
+        }
+        return 0;
     }
 
     private int christmasDdayDiscount(int visitDate) {
