@@ -31,11 +31,25 @@ public class ChristmasEvent {
         return 0;
     }
 
+    private int weekendDiscount(int visitDate, Map<Menu, Integer> order) {
+        if (isWeekend(visitDate)) {
+            return order.entrySet().stream()
+                    .filter(entry -> entry.getKey().isMain())
+                    .mapToInt(entry -> WEEKDAY_WEEKEND_DISCOUNT * entry.getValue())
+                    .sum();
+        }
+        return 0;
+    }
+
     private boolean isInChristmasDdayPeriod(int visitDate) {
         return visitDate <= CHRISTMAS_DAY;
     }
 
     private boolean isWeekday(int visitDate) {
         return visitDate % 7 >= 3 || visitDate % 7 == 0;
+    }
+
+    private boolean isWeekend(int visitDate) {
+        return visitDate % 7 == 1 || visitDate % 7 == 2;
     }
 }
