@@ -9,6 +9,7 @@ public class ChristmasEvent {
     private static final int CHRISTMAS_DAY = 25;
     private static final int WEEKDAY_WEEKEND_DISCOUNT = 2023;
     private static final int STAR_DAY_DISCOUNT = 1000;
+    private static final int MINIMUM_ORDER_FOR_CHAMPAGNE = 120_000;
     private static final List<Integer> STAR_DAYS = List.of(3, 10, 17, 24, 25, 31);
 
     private int calculateTotalOrderPrice(Map<Menu, Integer> order) {
@@ -65,5 +66,9 @@ public class ChristmasEvent {
 
     private boolean isStarDay(int visitDate) {
         return STAR_DAYS.contains(visitDate);
+    }
+
+    private boolean checkGiveawayChampagne(int totalOrderPrice) {
+        return totalOrderPrice >= MINIMUM_ORDER_FOR_CHAMPAGNE;
     }
 }
