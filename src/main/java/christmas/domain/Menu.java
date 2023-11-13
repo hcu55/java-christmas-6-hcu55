@@ -1,5 +1,8 @@
 package christmas.domain;
 
+import java.util.Arrays;
+import java.util.Map;
+
 public enum Menu {
     // 애피타이저
     YANGSONGSOUP("양송이수프", 6000, "APPETIZER"),
@@ -29,5 +32,15 @@ public enum Menu {
         this.menuName = menuName;
         this.menuPrice = menuPrice;
         this.menuType = menuType;
+    }
+
+    public static boolean isMenuName(Menu inputMenu) {
+        return Arrays.stream(Menu.values())
+                .anyMatch(menu -> menu.menuName.equals(inputMenu.menuName));
+    }
+
+    public static boolean isOnlyDrink(Map<Menu, Integer> order) {
+        return order.keySet().stream()
+                .allMatch(menu -> menu.menuType.equals("DRINK"));
     }
 }
