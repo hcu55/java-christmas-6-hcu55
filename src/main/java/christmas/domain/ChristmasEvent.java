@@ -6,6 +6,7 @@ public class ChristmasEvent {
     private static final int CHRISTMAS_BASE_DISCOUNT = 1000;
     private static final int INCREASE_DISCOUNT = 100;
     private static final int CHRISTMAS_DAY = 25;
+    private static final int WEEKDAY_WEEKEND_DISCOUNT = 2023;
 
     private int calculateTotalOrderPrice(Map<Menu, Integer> order) {
         return order.entrySet().stream()
@@ -20,7 +21,21 @@ public class ChristmasEvent {
         return 0;
     }
 
+    private int weekdayDiscount(int visitDate, Map<Menu, Integer> order) {
+        if (isWeekday(visitDate)) {
+            return order.entrySet().stream()
+                    .filter(entry -> entry.getKey().isDessert())
+                    .mapToInt(entry -> WEEKDAY_WEEKEND_DISCOUNT * entry.getValue())
+                    .sum();
+        }
+        return 0;
+    }
+
     private boolean isInChristmasDdayPeriod(int visitDate) {
         return visitDate <= CHRISTMAS_DAY;
+    }
+
+    private boolean isWeekday(int visitDate) {
+        return visitDate % 7 >= 3 || visitDate % 7 == 0;
     }
 }

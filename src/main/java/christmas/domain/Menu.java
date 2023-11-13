@@ -47,4 +47,8 @@ public enum Menu {
     public int getPriceForCount(int count) {
         return this.menuPrice * count;
     }
+
+    public boolean isDessert() {
+        return this.menuType.equals("DESSERT");
+    }
 }
