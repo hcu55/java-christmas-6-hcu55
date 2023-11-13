@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import java.util.List;
 import java.util.Map;
 
 public class ChristmasEvent {
@@ -7,6 +8,8 @@ public class ChristmasEvent {
     private static final int INCREASE_DISCOUNT = 100;
     private static final int CHRISTMAS_DAY = 25;
     private static final int WEEKDAY_WEEKEND_DISCOUNT = 2023;
+    private static final int STAR_DAY_DISCOUNT = 1000;
+    private static final List<Integer> STAR_DAYS = List.of(3, 10, 17, 24, 25, 31);
 
     private int calculateTotalOrderPrice(Map<Menu, Integer> order) {
         return order.entrySet().stream()
@@ -41,6 +44,13 @@ public class ChristmasEvent {
         return 0;
     }
 
+    private int calculateStarDayDiscount(int visitDate) {
+        if (isStarDay(visitDate)) {
+            return STAR_DAY_DISCOUNT;
+        }
+        return 0;
+    }
+
     private boolean isInChristmasDdayPeriod(int visitDate) {
         return visitDate <= CHRISTMAS_DAY;
     }
@@ -51,5 +61,9 @@ public class ChristmasEvent {
 
     private boolean isWeekend(int visitDate) {
         return visitDate % 7 == 1 || visitDate % 7 == 2;
+    }
+
+    private boolean isStarDay(int visitDate) {
+        return STAR_DAYS.contains(visitDate);
     }
 }
