@@ -3,9 +3,9 @@ package christmas.view;
 import camp.nextstep.edu.missionutils.Console;
 import christmas.domain.Menu;
 
-import java.util.Arrays;
+import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -17,11 +17,25 @@ public class InputView {
     public Map<Menu, Integer> inputOrderMenu() {
         String inputMenu = Console.readLine();
 
-        return Arrays.stream(inputMenu.split(","))
-                .map(menu -> menu.split("-"))
-                .collect(Collectors.toMap(
-                        arr -> Menu.valueOf(arr[0]),
-                        arr -> Integer.parseInt(arr[1])
-                ));
+        String[] orderMenus = inputMenu.split(",");
+        Map<Menu, Integer> order = new HashMap<>();
+
+        for (String orderMenu : orderMenus) {
+            Map.Entry<Menu, Integer> parsedOrder = parseOrder(orderMenu);
+            addToOrder(order, parsedOrder);
+        }
+        return order;
+    }
+
+    private static Map.Entry<Menu, Integer> parseOrder(String orderMenu) {
+        String[] arr = orderMenu.split("-");
+        Menu menu = Menu.valueOf(arr[0]);
+        int count = Integer.parseInt(arr[1]);
+
+        return new AbstractMap.SimpleEntry<>(menu, count);
+    }
+
+    private static void addToOrder(Map<Menu, Integer> order, Map.Entry<Menu, Integer> parsedOrder) {
+        order.put(parsedOrder.getKey(), parsedOrder.getValue());
     }
 }
