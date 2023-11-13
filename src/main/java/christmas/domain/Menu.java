@@ -43,4 +43,8 @@ public enum Menu {
         return order.keySet().stream()
                 .allMatch(menu -> menu.menuType.equals("DRINK"));
     }
+
+    public int getPriceForCount(int count) {
+        return this.menuPrice * count;
+    }
 }
