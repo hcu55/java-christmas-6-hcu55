@@ -88,6 +88,10 @@ public class ChristmasEvent {
         return discountDetails.values().stream().mapToInt(Integer::intValue).sum();
     }
 
+    public int deductDiscountFromTotalPrice(int totalOrderPrice, int discount) {
+        return totalOrderPrice - discount;
+    }
+
     private boolean isInChristmasDdayPeriod(int visitDate) {
         return visitDate <= CHRISTMAS_DAY;
     }
