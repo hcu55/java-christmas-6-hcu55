@@ -18,6 +18,7 @@ public class OutputView {
     private static final String PRINT_DISCOUNT_DETAILS_MESSAGE = "\n<혜택 내역>\n%s";
     private static final String PRINT_TOTAL_BENEFIT_MESSAGE = "<총혜택 금액>\n-%,d원\n";
     private static final String PRINT_AFTER_DISCOUNT_PAYMENT_MESSAGE = "\n<할인 후 예상 결제 금액>\n%s원";
+    private static final String PRINT_EVENT_BADGE_MESSAGE = "\n<12월 이벤트 배지>\n%s";
     private DecimalFormat formatter = new DecimalFormat("#,###");
 
     public void printChristmasPromotionStartMessage() {
@@ -85,5 +86,11 @@ public class OutputView {
 
         String formattedAfterDiscountPayment = formatter.format(afterDiscountPayment);
         System.out.printf(PRINT_AFTER_DISCOUNT_PAYMENT_MESSAGE, formattedAfterDiscountPayment);
+    }
+
+    public void printEventBadge(EventBadge eventBadge, int totalBenefit) {
+        String badge = eventBadge.GrantingEventBadge(totalBenefit);
+
+        System.out.printf(PRINT_EVENT_BADGE_MESSAGE, badge);
     }
 }
