@@ -2,6 +2,7 @@ package christmas.view;
 
 import christmas.domain.Menu;
 
+import java.text.DecimalFormat;
 import java.util.Map;
 
 public class OutputView {
@@ -10,6 +11,9 @@ public class OutputView {
     private static final String PRINT_ORDER_MENU_MESSAGE = "주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)";
     private static final String PRINT_PREVIEW_EVENT_BENEFIT_MESSAGE = "12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n";
     private static final String PRINT_ORDER_MENU_AND_COUNT_MESSAGE = "<주문 메뉴>";
+    private static final String PRINT_TOTAL_ORDER_PRICE_MESSAGE = "\n<할인 전 총주문 금액>\n%s원";
+
+    private DecimalFormat formatter = new DecimalFormat("#,###");
 
     public void printChristmasPromotionStartMessage() {
         System.out.println(PRINT_CHRISTMAS_PROMOTION_START_MESSAGE);
@@ -32,5 +36,9 @@ public class OutputView {
         for (Map.Entry<Menu, Integer> entry : order.entrySet()) {
             System.out.printf("%s %d개\n", entry.getKey(), entry.getValue());
         }
+    }
+
+    public void printTotalOrderPrice(int totalOrderPrice) {
+        System.out.printf(PRINT_TOTAL_ORDER_PRICE_MESSAGE, formatter.format(totalOrderPrice));
     }
 }
