@@ -17,7 +17,7 @@ public class ChristmasEvent {
 
     private Map<String, Integer> discountDetails = new HashMap<>();
 
-    private int calculateTotalOrderPrice(Map<Menu, Integer> order) {
+    public int calculateTotalOrderPrice(Map<Menu, Integer> order) {
         return order.entrySet().stream()
                 .mapToInt(entry -> entry.getKey().getPriceForCount(entry.getValue()))
                 .sum();
@@ -84,6 +84,10 @@ public class ChristmasEvent {
         }
     }
 
+    public int calculateTotalDiscount() {
+        return discountDetails.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
     private boolean isInChristmasDdayPeriod(int visitDate) {
         return visitDate <= CHRISTMAS_DAY;
     }
@@ -100,7 +104,7 @@ public class ChristmasEvent {
         return STAR_DAYS.contains(visitDate);
     }
 
-    private boolean checkGiveawayChampagne(int totalOrderPrice) {
+    public boolean checkGiveawayChampagne(int totalOrderPrice) {
         return totalOrderPrice >= MINIMUM_ORDER_FOR_CHAMPAGNE;
     }
 }
