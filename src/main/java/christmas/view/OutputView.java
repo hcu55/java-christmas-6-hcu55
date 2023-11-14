@@ -12,6 +12,7 @@ public class OutputView {
     private static final String PRINT_PREVIEW_EVENT_BENEFIT_MESSAGE = "12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n";
     private static final String PRINT_ORDER_MENU_AND_COUNT_MESSAGE = "<주문 메뉴>";
     private static final String PRINT_TOTAL_ORDER_PRICE_MESSAGE = "\n<할인 전 총주문 금액>\n%s원";
+    private static final String PRINT_CHAMPAGNE_GIVEAWAY_MESSAGE = "\n<증정 메뉴>\n%s";
 
     private DecimalFormat formatter = new DecimalFormat("#,###");
 
@@ -40,5 +41,13 @@ public class OutputView {
 
     public void printTotalOrderPrice(int totalOrderPrice) {
         System.out.printf(PRINT_TOTAL_ORDER_PRICE_MESSAGE, formatter.format(totalOrderPrice));
+    }
+
+    public void printChampagneGiveaway(boolean isChampagneGiveaway) {
+        if (isChampagneGiveaway) {
+            System.out.printf(PRINT_CHAMPAGNE_GIVEAWAY_MESSAGE, "샴페인 1개");
+            return;
+        }
+        System.out.printf(PRINT_CHAMPAGNE_GIVEAWAY_MESSAGE, "없음");
     }
 }
