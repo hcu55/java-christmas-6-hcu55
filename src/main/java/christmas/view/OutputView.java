@@ -17,6 +17,7 @@ public class OutputView {
     private static final String PRINT_CHAMPAGNE_GIVEAWAY_MESSAGE = "\n<증정 메뉴>\n%s";
     private static final String PRINT_DISCOUNT_DETAILS_MESSAGE = "\n<혜택 내역>\n%s";
     private static final String PRINT_TOTAL_BENEFIT_MESSAGE = "<총혜택 금액>\n-%,d원\n";
+    private static final String PRINT_AFTER_DISCOUNT_PAYMENT_MESSAGE = "\n<할인 후 예상 결제 금액>\n%s원";
     private DecimalFormat formatter = new DecimalFormat("#,###");
 
     public void printChristmasPromotionStartMessage() {
@@ -75,5 +76,14 @@ public class OutputView {
 
         String formattedTotalBenefit = formatter.format(totalBenefit);
         System.out.printf(PRINT_TOTAL_BENEFIT_MESSAGE, formattedTotalBenefit);
+    }
+
+    public void printPaymentAfterDiscount(ChristmasEvent event, Map<Menu, Integer> order) {
+        int totalOrderPrice = event.calculateTotalOrderPrice(order);
+        int totalDiscount = event.calculateTotalDiscount();
+        int afterDiscountPayment = event.deductDiscountFromTotalPrice(totalOrderPrice, totalDiscount);
+
+        String formattedAfterDiscountPayment = formatter.format(afterDiscountPayment);
+        System.out.printf(PRINT_AFTER_DISCOUNT_PAYMENT_MESSAGE, formattedAfterDiscountPayment);
     }
 }
