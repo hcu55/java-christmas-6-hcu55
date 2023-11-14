@@ -1,6 +1,7 @@
 package christmas.view;
 
 import christmas.domain.ChristmasEvent;
+import christmas.domain.EventBadge;
 import christmas.domain.Menu;
 
 import java.text.DecimalFormat;
@@ -15,6 +16,7 @@ public class OutputView {
     private static final String PRINT_TOTAL_ORDER_PRICE_MESSAGE = "\n<할인 전 총주문 금액>\n%s원";
     private static final String PRINT_CHAMPAGNE_GIVEAWAY_MESSAGE = "\n<증정 메뉴>\n%s";
     private static final String PRINT_DISCOUNT_DETAILS_MESSAGE = "\n<혜택 내역>\n%s";
+    private static final String PRINT_TOTAL_BENEFIT_MESSAGE = "<총혜택 금액>\n-%,d원\n";
     private DecimalFormat formatter = new DecimalFormat("#,###");
 
     public void printChristmasPromotionStartMessage() {
@@ -62,5 +64,16 @@ public class OutputView {
             return;
         }
         System.out.printf(PRINT_DISCOUNT_DETAILS_MESSAGE, sb.toString());
+    }
+
+    public void printTotalBenefit(ChristmasEvent event, Map<Menu, Integer> order) {
+        EventBadge eventBadge = new EventBadge();
+
+        int totalDiscount = event.calculateTotalDiscount();
+        boolean isChampagneGet = event.checkGiveawayChampagne(event.calculateTotalOrderPrice(order));
+        int totalBenefit = eventBadge.totalBenefitAmount(totalDiscount, isChampagneGet);
+
+        String formattedTotalBenefit = formatter.format(totalBenefit);
+        System.out.printf(PRINT_TOTAL_BENEFIT_MESSAGE, formattedTotalBenefit);
     }
 }
