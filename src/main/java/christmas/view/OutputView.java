@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.domain.ChristmasEvent;
 import christmas.domain.Menu;
 
 import java.text.DecimalFormat;
@@ -13,7 +14,7 @@ public class OutputView {
     private static final String PRINT_ORDER_MENU_AND_COUNT_MESSAGE = "<주문 메뉴>";
     private static final String PRINT_TOTAL_ORDER_PRICE_MESSAGE = "\n<할인 전 총주문 금액>\n%s원";
     private static final String PRINT_CHAMPAGNE_GIVEAWAY_MESSAGE = "\n<증정 메뉴>\n%s";
-
+    private static final String PRINT_DISCOUNT_DETAILS_MESSAGE = "\n<혜택 내역>\n%s";
     private DecimalFormat formatter = new DecimalFormat("#,###");
 
     public void printChristmasPromotionStartMessage() {
@@ -49,5 +50,17 @@ public class OutputView {
             return;
         }
         System.out.printf(PRINT_CHAMPAGNE_GIVEAWAY_MESSAGE, "없음");
+    }
+
+    public void printDiscountDetails(ChristmasEvent event) {
+        StringBuilder sb = new StringBuilder();
+        event.processDiscountDetails((key, value) -> {
+            sb.append(key).append(": -").append(formatter.format(value)).append("원");
+        });
+        if (sb.length() == 0) {
+            System.out.println("없음");
+            return;
+        }
+        System.out.printf(PRINT_DISCOUNT_DETAILS_MESSAGE, sb.toString());
     }
 }
