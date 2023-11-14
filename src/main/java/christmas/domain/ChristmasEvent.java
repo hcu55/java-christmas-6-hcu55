@@ -1,7 +1,9 @@
 package christmas.domain;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 public class ChristmasEvent {
     private static final int CHRISTMAS_BASE_DISCOUNT = 1000;
@@ -12,6 +14,8 @@ public class ChristmasEvent {
     private static final int MINIMUM_ORDER_FOR_CHAMPAGNE = 120_000;
     private static final int MINIMUM_ORDER_FOR_EVENT_DISCOUNT = 10_000;
     private static final List<Integer> STAR_DAYS = List.of(3, 10, 17, 24, 25, 31);
+
+    private Map<String, Integer> discountDetails = new HashMap<>();
 
     private int calculateTotalOrderPrice(Map<Menu, Integer> order) {
         return order.entrySet().stream()
@@ -31,36 +35,53 @@ public class ChristmasEvent {
 
     private int christmasDdayDiscount(int visitDate) {
         if (isInChristmasDdayPeriod(visitDate)) {
-            return CHRISTMAS_BASE_DISCOUNT + INCREASE_DISCOUNT * (visitDate - 1);
+            int discountAmount = CHRISTMAS_BASE_DISCOUNT + INCREASE_DISCOUNT * (visitDate - 1);
+            discountDetails.put("크리스마스 디데이 할인", discountAmount);
+            return discountAmount;
         }
         return 0;
     }
 
     private int weekdayDiscount(int visitDate, Map<Menu, Integer> order) {
         if (isWeekday(visitDate)) {
-            return order.entrySet().stream()
+            int discountAmount = order.entrySet().stream()
                     .filter(entry -> entry.getKey().isDessert())
                     .mapToInt(entry -> WEEKDAY_WEEKEND_DISCOUNT * entry.getValue())
                     .sum();
+            if (discountAmount > 0) {
+                discountDetails.put("평일 할인", discountAmount);
+            }
+            return discountAmount;
         }
         return 0;
     }
 
     private int weekendDiscount(int visitDate, Map<Menu, Integer> order) {
         if (isWeekend(visitDate)) {
-            return order.entrySet().stream()
+            int discountAmount = order.entrySet().stream()
                     .filter(entry -> entry.getKey().isMain())
                     .mapToInt(entry -> WEEKDAY_WEEKEND_DISCOUNT * entry.getValue())
                     .sum();
+            if (discountAmount > 0) {
+                discountDetails.put("주말 할인", discountAmount);
+            }
+            return discountAmount;
         }
         return 0;
     }
 
     private int starDayDiscount(int visitDate) {
         if (isStarDay(visitDate)) {
+            discountDetails.put("특별 할인", STAR_DAY_DISCOUNT);
             return STAR_DAY_DISCOUNT;
         }
         return 0;
+    }
+
+    public void processDiscountDetails(BiConsumer<String, Integer> action) {
+        for (Map.Entry<String, Integer> entry : discountDetails.entrySet()) {
+            action.accept(entry.getKey(), entry.getValue());
+        }
     }
 
     private boolean isInChristmasDdayPeriod(int visitDate) {
