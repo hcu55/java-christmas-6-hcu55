@@ -8,8 +8,8 @@ public class InputVisitDateValidator {
     private static final int MAX_VISIT_DATE = 31;
 
     public void validateInputExpectedVisitDate(String visitDate) {
-        validateNonIntegerVisitDate(visitDate);
         validateNonInputVisitDate(visitDate);
+        validateNonIntegerVisitDate(visitDate);
         validateWrongRangeVisitDate(visitDate);
     }
 
