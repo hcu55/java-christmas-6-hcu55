@@ -23,7 +23,7 @@ public class ChristmasEvent {
                 .sum();
     }
 
-    private int totalDiscountIfCanEvent(int totalOrderPrice, int visitDate, Map<Menu, Integer> order) {
+    public int totalDiscountIfCanEvent(int totalOrderPrice, int visitDate, Map<Menu, Integer> order) {
         if (totalOrderPrice >= MINIMUM_ORDER_FOR_EVENT_DISCOUNT) {
             return christmasDdayDiscount(visitDate) +
                     weekdayDiscount(visitDate, order) +
