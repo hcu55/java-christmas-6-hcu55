@@ -5,13 +5,17 @@ import java.util.Map;
 
 public class EventBadge {
     private static final int CHAMPAGNE_PRICE = 25_000;
+    private static final String SANTA = "산타";
+    private static final String TREE = "트리";
+    private static final String STAR = "별";
+    private static final String NON_EXIST = "없음";
     private static final Map<Integer, String> badgeMap;
 
     static {
         badgeMap = new LinkedHashMap<>();
-        badgeMap.put(20_000, "산타");
-        badgeMap.put(10_000, "트리");
-        badgeMap.put(5_000, "별");
+        badgeMap.put(20_000, SANTA);
+        badgeMap.put(10_000, TREE);
+        badgeMap.put(5_000, STAR);
     }
 
     public int totalBenefitAmount(int totalDiscount, boolean isChampagneGet) {
@@ -28,6 +32,6 @@ public class EventBadge {
                 return entry.getValue();
             }
         }
-        return "없음";
+        return NON_EXIST;
     }
 }

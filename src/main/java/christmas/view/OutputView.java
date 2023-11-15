@@ -19,6 +19,9 @@ public class OutputView {
     private static final String PRINT_TOTAL_BENEFIT_MESSAGE = "\n<총혜택 금액>\n%s원\n";
     private static final String PRINT_AFTER_DISCOUNT_PAYMENT_MESSAGE = "\n<할인 후 예상 결제 금액>\n%s원\n";
     private static final String PRINT_EVENT_BADGE_MESSAGE = "\n<12월 이벤트 배지>\n%s";
+    private static final String GIVEAWAY_EVENT = "증정 이벤트: -25,000원";
+    private static final String ONE_CHAMPAGNE = "샴폐인 1개";
+    private static final String NON_EXIST = "없음";
     private DecimalFormat formatter = new DecimalFormat("#,###");
 
     public void printChristmasPromotionStartMessage() {
@@ -50,10 +53,10 @@ public class OutputView {
 
     public void printChampagneGiveaway(boolean isChampagneGiveaway) {
         if (isChampagneGiveaway) {
-            System.out.printf(PRINT_CHAMPAGNE_GIVEAWAY_MESSAGE, "샴페인 1개");
+            System.out.printf(PRINT_CHAMPAGNE_GIVEAWAY_MESSAGE, ONE_CHAMPAGNE);
             return;
         }
-        System.out.printf(PRINT_CHAMPAGNE_GIVEAWAY_MESSAGE, "없음");
+        System.out.printf(PRINT_CHAMPAGNE_GIVEAWAY_MESSAGE, NON_EXIST);
     }
 
     public void printDiscountDetails(ChristmasEvent event, boolean isChampagneGiveaway) {
@@ -62,10 +65,10 @@ public class OutputView {
             sb.append(key).append(": -").append(formatter.format(value)).append("원\n");
         });
         if (isChampagneGiveaway) {
-            sb.append("증정 이벤트: -25,000원");
+            sb.append(GIVEAWAY_EVENT);
         }
         if (sb.length() == 0) {
-            System.out.printf(PRINT_DISCOUNT_DETAILS_MESSAGE, "없음");
+            System.out.printf(PRINT_DISCOUNT_DETAILS_MESSAGE, NON_EXIST);
             return;
         }
         System.out.printf(PRINT_DISCOUNT_DETAILS_MESSAGE, sb.toString());

@@ -13,6 +13,10 @@ public class ChristmasEvent {
     private static final int STAR_DAY_DISCOUNT = 1000;
     private static final int MINIMUM_ORDER_FOR_CHAMPAGNE = 120_000;
     private static final int MINIMUM_ORDER_FOR_EVENT_DISCOUNT = 10_000;
+    private static final String CHRISTMAS_DAY_DISCOUNT = "크리스마스 디데이 할인";
+    private static final String WEEKDAY_DISCOUNT = "평일 할인";
+    private static final String WEEKEND_DISCOUNT = "주말 할인";
+    private static final String STARDAY_DISCOUNT = "특별 할인";
     private static final List<Integer> STAR_DAYS = List.of(3, 10, 17, 24, 25, 31);
 
     private Map<String, Integer> discountDetails = new HashMap<>();
@@ -36,7 +40,7 @@ public class ChristmasEvent {
     private int christmasDdayDiscount(int visitDate) {
         if (isInChristmasDdayPeriod(visitDate)) {
             int discountAmount = CHRISTMAS_BASE_DISCOUNT + INCREASE_DISCOUNT * (visitDate - 1);
-            discountDetails.put("크리스마스 디데이 할인", discountAmount);
+            discountDetails.put(CHRISTMAS_DAY_DISCOUNT, discountAmount);
             return discountAmount;
         }
         return 0;
@@ -49,7 +53,7 @@ public class ChristmasEvent {
                     .mapToInt(entry -> WEEKDAY_WEEKEND_DISCOUNT * entry.getValue())
                     .sum();
             if (discountAmount > 0) {
-                discountDetails.put("평일 할인", discountAmount);
+                discountDetails.put(WEEKDAY_DISCOUNT, discountAmount);
             }
             return discountAmount;
         }
@@ -63,7 +67,7 @@ public class ChristmasEvent {
                     .mapToInt(entry -> WEEKDAY_WEEKEND_DISCOUNT * entry.getValue())
                     .sum();
             if (discountAmount > 0) {
-                discountDetails.put("주말 할인", discountAmount);
+                discountDetails.put(WEEKEND_DISCOUNT, discountAmount);
             }
             return discountAmount;
         }
@@ -72,7 +76,7 @@ public class ChristmasEvent {
 
     private int starDayDiscount(int visitDate) {
         if (isStarDay(visitDate)) {
-            discountDetails.put("특별 할인", STAR_DAY_DISCOUNT);
+            discountDetails.put(STARDAY_DISCOUNT, STAR_DAY_DISCOUNT);
             return STAR_DAY_DISCOUNT;
         }
         return 0;

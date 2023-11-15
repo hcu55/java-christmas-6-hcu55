@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InputView {
+    private static final String COMMA = ",";
+    private static final String DASH = "-";
 
     InputVisitDateValidator inputVisitDateValidator = new InputVisitDateValidator();
 
@@ -24,7 +26,7 @@ public class InputView {
         String inputMenu = Console.readLine();
         InputOrderMenuValidator.validateWrongOrderFormat(inputMenu);    // 메뉴 주문 형식 검증
 
-        String[] orderMenus = inputMenu.split(",");
+        String[] orderMenus = inputMenu.split(COMMA);
         Map<Menu, Integer> order = new HashMap<>();
 
         for (String orderMenu : orderMenus) {
@@ -37,7 +39,7 @@ public class InputView {
     }
 
     private Map.Entry<Menu, Integer> parseMenuNameAndCount(String orderMenu) {
-        String[] arr = orderMenu.split("-");
+        String[] arr = orderMenu.split(DASH);
         InputOrderMenuValidator.validateWrongMenuName(arr[0]);
         Menu menu = Menu.getMenuByName(arr[0]);
         int count = Integer.parseInt(arr[1]);
