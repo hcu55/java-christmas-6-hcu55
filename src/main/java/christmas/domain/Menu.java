@@ -34,6 +34,13 @@ public enum Menu {
         this.menuType = menuType;
     }
 
+    public static Menu getMenuByName(String inputMenuName) {
+        return Arrays.stream(Menu.values())
+                .filter(menu -> menu.menuName.equals(inputMenuName))
+                .findFirst()
+                .orElse(null);
+    }
+
     public static boolean isMenuName(Menu inputMenu) {
         return Arrays.stream(Menu.values())
                 .anyMatch(menu -> menu.menuName.equals(inputMenu.menuName));
@@ -54,5 +61,10 @@ public enum Menu {
 
     public boolean isMain() {
         return this.menuType.equals("MAIN");
+    }
+
+    @Override
+    public String toString() {
+        return menuName;
     }
 }
