@@ -58,6 +58,13 @@ public class InputOrderMenuValidator {
         }
     }
 
+    public static void validateWrongMenuName(String menuName) {
+        Menu menu = Menu.getMenuByName(menuName);
+        if (menu == null) {
+            throw new IllegalArgumentException(WRONG_ORDER_ERROR_MESSAGE);
+        }
+    }
+
     public static void validateWrongOrderFormat(String inputMenu) {
         if (!inputMenu.matches(regex)) {
             throw new IllegalArgumentException(WRONG_ORDER_ERROR_MESSAGE);

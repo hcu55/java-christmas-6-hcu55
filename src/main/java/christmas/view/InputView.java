@@ -38,6 +38,7 @@ public class InputView {
 
     private Map.Entry<Menu, Integer> parseMenuNameAndCount(String orderMenu) {
         String[] arr = orderMenu.split("-");
+        InputOrderMenuValidator.validateWrongMenuName(arr[0]);
         Menu menu = Menu.getMenuByName(arr[0]);
         int count = Integer.parseInt(arr[1]);
 
